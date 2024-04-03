@@ -80,25 +80,6 @@ ALTER DATABASE [LogisticSystem] SET QUERY_STORE = OFF
 GO
 USE [LogisticSystem]
 GO
-/****** Object:  Table [dbo].[tbl_AssignToDriver]    Script Date: 25/11/2023 10:03:45 pm ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[tbl_AssignToDriver](
-	[AssignToId] [int] IDENTITY(1,1) NOT NULL,
-	[DriverId] [int] NOT NULL,
-	[SecurityTeamId] [int] NOT NULL,
-	[RouteId] [int] NOT NULL,
-	[VehicleId] [int] NOT NULL,
-	[Status] [varchar](30) NULL,
-	[CreatedDate] [datetime] NULL,
- CONSTRAINT [PK_tbl_AssignToId] PRIMARY KEY CLUSTERED 
-(
-	[AssignToId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
 /****** Object:  Table [dbo].[tbl_Login]    Script Date: 25/11/2023 10:03:45 pm ******/
 SET ANSI_NULLS ON
 GO
@@ -114,53 +95,6 @@ CREATE TABLE [dbo].[tbl_Login](
  CONSTRAINT [PK_tbl_Login] PRIMARY KEY CLUSTERED 
 (
 	[UserId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[tbl_ParcelStatus]    Script Date: 25/11/2023 10:03:45 pm ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[tbl_ParcelStatus](
-	[ParcelStatusId] [int] IDENTITY(1,1) NOT NULL,
-	[ParcelStatusName] [varchar](150) NOT NULL,
-	[CreatedDate] [datetime] NULL,
- CONSTRAINT [PK_tbl_ParcelStatus] PRIMARY KEY CLUSTERED 
-(
-	[ParcelStatusId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[tbl_Route]    Script Date: 25/11/2023 10:03:45 pm ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[tbl_Route](
-	[RouteId] [int] IDENTITY(1,1) NOT NULL,
-	[RouteNumber] [varchar](150) NOT NULL,
-	[Address] [varchar](250) NOT NULL,
-	[CreatedDate] [datetime] NULL,
- CONSTRAINT [PK_tbl_Route] PRIMARY KEY CLUSTERED 
-(
-	[RouteId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[tbl_SecurityTeam]    Script Date: 25/11/2023 10:03:45 pm ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[tbl_SecurityTeam](
-	[SecurityTeamId] [int] IDENTITY(1,1) NOT NULL,
-	[SecurityTeamName] [varchar](150) NOT NULL,
-	[NoOfGuards] [numeric](10, 0) NOT NULL,
-	[CreatedDate] [datetime] NULL,
- CONSTRAINT [PK_tbl_SecurityTeam] PRIMARY KEY CLUSTERED 
-(
-	[SecurityTeamId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -182,7 +116,7 @@ CREATE TABLE [dbo].[tbl_Vehicle](
 GO
 SET IDENTITY_INSERT [dbo].[tbl_Login] ON 
 GO
-INSERT [dbo].[tbl_Login] ([UserId], [FullName], [UserName], [Email], [Password], [IsAdmin]) VALUES (1, N'Abdul Wahab', N'admin', N'Test@test.com', N'123456', 1)
+INSERT [dbo].[tbl_Login] ([UserId], [FullName], [UserName], [Email], [Password], [IsAdmin]) VALUES (1, N'Asif', N'admin', N'asif@admin.com', N'123456', 1)
 GO
 INSERT [dbo].[tbl_Login] ([UserId], [FullName], [UserName], [Email], [Password], [IsAdmin]) VALUES (2, N'Adil', N'adil', N'Adil@test.com', N'654321', 0)
 GO
@@ -192,23 +126,6 @@ INSERT [dbo].[tbl_Login] ([UserId], [FullName], [UserName], [Email], [Password],
 GO
 SET IDENTITY_INSERT [dbo].[tbl_Login] OFF
 GO
-SET IDENTITY_INSERT [dbo].[tbl_ParcelStatus] ON 
-GO
-INSERT [dbo].[tbl_ParcelStatus] ([ParcelStatusId], [ParcelStatusName], [CreatedDate]) VALUES (1, N'Out of depot', CAST(N'2023-11-21T21:47:29.770' AS DateTime))
-GO
-INSERT [dbo].[tbl_ParcelStatus] ([ParcelStatusId], [ParcelStatusName], [CreatedDate]) VALUES (2, N'On the route', CAST(N'2023-11-21T21:47:46.150' AS DateTime))
-GO
-INSERT [dbo].[tbl_ParcelStatus] ([ParcelStatusId], [ParcelStatusName], [CreatedDate]) VALUES (3, N'Out of service', CAST(N'2023-11-21T21:47:59.677' AS DateTime))
-GO
-INSERT [dbo].[tbl_ParcelStatus] ([ParcelStatusId], [ParcelStatusName], [CreatedDate]) VALUES (4, N'On destinaiton', CAST(N'2023-11-21T21:48:11.433' AS DateTime))
-GO
-SET IDENTITY_INSERT [dbo].[tbl_ParcelStatus] OFF
-GO
-ALTER TABLE [dbo].[tbl_ParcelStatus] ADD  CONSTRAINT [DF_tbl_ParcelStatus_CreatedDate]  DEFAULT (getdate()) FOR [CreatedDate]
-GO
-ALTER TABLE [dbo].[tbl_Route] ADD  CONSTRAINT [DF_tbl_Route_CreatedDate]  DEFAULT (getdate()) FOR [CreatedDate]
-GO
-ALTER TABLE [dbo].[tbl_SecurityTeam] ADD  CONSTRAINT [DF_tbl_SecurityTeam_CreatedDate]  DEFAULT (getdate()) FOR [CreatedDate]
 GO
 ALTER TABLE [dbo].[tbl_Vehicle] ADD  CONSTRAINT [DF_tbl_Vehicle_CreatedDate]  DEFAULT (getdate()) FOR [CreatedDate]
 GO
